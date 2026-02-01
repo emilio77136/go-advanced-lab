@@ -96,6 +96,52 @@ return
 }
 
 
+//..............................................................
+
+//Part3 - Apply
+func Apply(nums []int, operation func(int) int) []int {
+	result := make([]int, len(nums))
+
+	for i, v := range nums {
+		result[i] = operation(v)
+	}
+return result
+}
+
+
+//Part3 - Filter
+func Filter(nums []int, predicate func(int)bool)[]int{
+	result := []int{}
+
+	for _, v := range nums {
+		if predicate(v) {
+			result = append(result, v)
+		}
+	}
+return result
+}
+
+//Part3 - Reduce
+func Reduce(nums []int, initial int, operation func(acc,cur int) int) int{
+	acc := initial
+
+	for _, v := range nums {
+		acc = operation(acc, v)
+	}
+return acc
+}
+
+//Part3 - Compose
+func Compose(f func(int) int, g func(int) int) func(int) int{
+	return func(x int) int {
+		return f(g(x))
+	}
+}
+
+
+
+
+
 
 
 
@@ -125,5 +171,44 @@ func main() {
 	fmt.Println(get())
 	sub(30)
 	fmt.Println(get())	
+
+//Part3 
+//Part3 - Apply
+
+	nums := []int{1,2,3,4}
+
+	squared := Apply(nums, func(x int) int {
+		return x * x
+	})
+	fmt.Println("Squared: ", squared)
+	
+//Part3 - Filter
+	evens := Filter(nums, func(x int) bool{
+		return x%2 ==0
+	})
+	fmt.Println("Evens: ", evens)
+
+//Part3- Reduce
+	sum := Reduce(nums, 0, func(acc, cur int) int {
+		return acc + cur
+	})
+	fmt.Println("Sum: ", sum)
+
+	product := Reduce(nums, 1, func(acc, cur int) int {
+		return acc * cur
+	})
+	fmt.Println("Product: ", product)
+//Part 3 - Compose
+	addTwo := func(x int) int{
+		return x + 2
+	}
+	
+	double1 := func(x int)int {
+		return x * 2
+	}
+
+	doubleThenAddTwo := Compose(addTwo, double1)
+	result := doubleThenAddTwo(5)
+	fmt.Println(result)
 
 }
