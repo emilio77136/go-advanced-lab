@@ -1,6 +1,7 @@
 package main
 
 import(
+	"os"
 	"fmt"
 )
 
@@ -140,6 +141,35 @@ func Compose(f func(int) int, g func(int) int) func(int) int{
 
 
 
+//Part4 Explore Process
+func ExploreProcess(){
+
+	pid := os.Getpid()
+	ppid := os.Getppid()
+
+	//Pid is a unique number that is assinged to a task
+	//Ppid is the parent from where that task started
+	
+	fmt.Println("===== Process Information =====")
+	fmt.Println("Current Process ID:", pid)
+	fmt.Println("Parent Process ID: ", ppid)
+
+	data := []int{1,2,3,4}
+
+	
+	//A slice header address is the whole group itself including all values
+	//A single element address is a specific value from the entire group
+
+	
+	fmt.Printf("Memory address of slide: %p\n", &data)
+	fmt.Printf("Memory address of first element: %p\n", &data[0])
+
+	//Process isolation means each process has its own private box.
+	//Other processes cannot write or read from another process
+
+	fmt.Println("Note: Other processes cannot access these memory address due to process isolation")
+
+}
 
 
 
@@ -211,4 +241,6 @@ func main() {
 	result := doubleThenAddTwo(5)
 	fmt.Println(result)
 
+//Part 4
+ExploreProcess()
 }
