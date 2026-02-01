@@ -172,7 +172,46 @@ func ExploreProcess(){
 }
 
 
+//Part 5
 
+func DoubleValue(x int) {
+	x = x * 2
+
+//This will not change the original varible
+//It will instead create a copy 
+}
+
+func DoublePointer(x * int){
+	*x = *x * 2
+
+//This will change original variable
+//The pointer refers to the original memory address
+
+}
+
+
+func CreateOnStack() int {
+	value := 10
+	return value
+//This variable stays on the stack
+
+}
+
+func CreateOnHeap() * int {
+	value := 20
+	return &value
+
+//This variable escapes to the heap
+
+}
+
+func SwapValues(a, b int) (int, int){
+	return b, a
+}
+
+func SwapPointers(a, b *int) {
+	*a, *b = *b, *a
+}
 
 
 
@@ -242,5 +281,44 @@ func main() {
 	fmt.Println(result)
 
 //Part 4
-ExploreProcess()
+	ExploreProcess()
+
+
+
+//Part 5
+z := 5
+	DoubleValue(z)
+	fmt.Println("After DoubleValue: ", z)
+	
+	DoublePointer(&z)
+	fmt.Println("After DoublePointer: ", z)
+
+	stackVal := CreateOnStack()
+	fmt.Println("Stack value: ", stackVal)
+
+	heapVal := CreateOnHeap()
+	fmt.Println("Heap value: ", heapVal)
+
+	i, k := 3,7
+	i, k = SwapValues(i,k)
+	//fmt.Println("After SwapValues: ", i, k)
+
+	l, m := 1,4
+	SwapPointers(&l, &m)
+	//fmt.Println("After SwapPointers: ", l, m)
+
+/*
+Which variables escaped to the heap?
+	The variable inside CreateOnHeap() escaped to the heap.
+
+Why did it escape?
+	It escaped because CreateOnHeap() returns a pointer to it.
+	Since the pointer is used after it cannot remain on the stack
+	so it must be put on the heap.
+	
+What does "escapes to heap" mean?
+	Escape to heap means that a variable cannot be safely stored
+	on the stack because it may be used again.
+*/
+
 }

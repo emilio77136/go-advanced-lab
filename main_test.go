@@ -324,11 +324,70 @@ func TestCompose( t *testing.T){
 
 
 
+func TestSwapValues(t *testing.T){
+	tests := []struct{
+		name string
+		a int
+		b int
+		wantA int
+		wantB int
+	}{
+
+		{name: "Positives", a:1, b:2, wantA: 2, wantB:1},
+		{name: "negative", a: -1, b:-2, wantA: -2, wantB: -1},
+		{name: "same", a: 1, b: 1, wantA: 1, wantB:1},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T){
+			gotA, gotB := SwapValues(tt.a, tt.b)
+			if gotA != tt.wantA || gotB != tt.wantB {
+			t.Errorf("Swap values(%d, %d) = (%d, %d), want (%d, %d)",
+				tt.a, tt.b, gotA, gotB, tt.wantA, tt.wantB)
+			}
+		})
+	}	
+}
 
 
 
+func TestSwapPointers(t *testing.T){
+	tests := []struct {
+		name string
+		a int
+		b int
+		wantA int
+		wantB int
+	}{
+		{name: "Positive", a: 3, b: 8, wantA: 8, wantB: 3},
+		{name: "negative", a: -1, b: -3, wantA: -3, wantB: -1},
+		{name: "same", a: 1, b: 1, wantA: 1, wantB: 1},
+
+	}
+for _, tt := range tests {
+	t.Run(tt.name, func(t *testing.T){
+		a := tt.a
+		b := tt.b
+	
+		SwapPointers(&a, &b)
+
+		if a != tt.wantA || b != tt.wantB {
+		t.Errorf("SwapPointers() result = (%d, %d), want(%d, %d",
+		a, b, tt.wantA, tt.wantB)
+		}
+	})
+	}	
+
+}
 
 
+func AnalyzeEscape(){
+	stackvalue := CreateOnStack()
+	heapvalue := CreateOnHeap()
+
+	_ = stackvalue
+	_ = heapvalue
+}
 
 
 
