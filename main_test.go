@@ -103,3 +103,104 @@ func TestPower(t *testing.T){
 
 
 }
+
+
+
+
+//...........................................................................
+
+
+//Part2 - Test Make Counter
+func  TestMakeCounter(t *testing.T){
+	tests := []struct {
+		name string
+		start int
+		want int
+	}{
+		{name: "Counter from 0 ", start: 0, want: 1},
+		{name: "Counter from 5", start 5, want: 6},
+		{name: "Counter from 10", start: 10, want: 11},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T){
+			counter := MakeCounter(tt.start)
+			got := counter()
+			if got != tt.want {
+				t.Errorf("counter() = %d, want %d" ,got, tt.want)
+			}
+		}
+	
+	}
+}
+
+//Part2 - Test Make Multiplier
+
+func TestMakeMultiplier(t *testing.T){
+	tests := []struct {
+		name string
+		factor int
+		input int
+		want int
+	}{
+		{name: "double 5", factor: 2, input: 5, want: 10},
+		{name: "triple 5", factor: 3, input: 5, want: 15},
+		{name: "Multiply by 0", factor: 0, input: 10, want: 0},
+		{name: "Negative", factor: -2, input: 6, want: -12},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T){
+			mult := MakeMultiplier(tt.factor)
+			got := mult(tt.input)
+			if got != tt.want{
+				t.Errorf("MakeMultiplier() = %d, want %d", got, tt.want)
+
+			}
+		}
+	}
+}
+
+//Part2 - Test Make Accumulator
+func TestMakeAccumulator(t *testing.T){
+	tests := []struct{
+		name string
+		initial int
+		adds []int
+		subs []int
+		want int
+	}{
+	{name: "add/subtract",initial: 10, adds: []int{5}, subs: []int{3}, want: 12},
+	{name: "multiple add", initial: 0, adds: []int{1,2,3}, subs: []int{}, want: 6},
+	{name: "multiple sub", initial: 20, adds: []int{}, subs: []int{5,5}, want: 10},
+
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T){
+			add, sub, get := MakeAccumulator(tt.initial)
+			
+			for _, v := range tt.adds {
+				add(v)
+			}
+			for _, v := range tt.subs{
+				sub(v)
+			}
+		
+			got := get()
+			if got != tt.want {
+				t.Errorf("MakeAccumulator() = %d, want %d", got, tt.want)
+			}
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
