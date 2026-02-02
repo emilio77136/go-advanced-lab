@@ -219,94 +219,7 @@ func SwapPointers(a, b *int) {
 func main() {
 
 	
-//Part2
-
-	counter1 := MakeCounter(0)
-	fmt.Println(counter1())
-	fmt.Println(counter1())
-
-	counter2 := MakeCounter(10)
-	fmt.Println(counter2())
-	fmt.Println(counter1())
-
-	double := MakeMultiplier(2)
-	triple := MakeMultiplier(3)
-
-	fmt.Println(double(5))
-	fmt.Println(triple(5))
-
-	add, sub, get := MakeAccumulator(100)
-	add(50)
-	fmt.Println(get())
-	sub(30)
-	fmt.Println(get())	
-
-//Part3 
-//Part3 - Apply
-
-	nums := []int{1,2,3,4}
-
-	squared := Apply(nums, func(x int) int {
-		return x * x
-	})
-	fmt.Println("Squared: ", squared)
 	
-//Part3 - Filter
-	evens := Filter(nums, func(x int) bool{
-		return x%2 ==0
-	})
-	fmt.Println("Evens: ", evens)
-
-//Part3- Reduce
-	sum := Reduce(nums, 0, func(acc, cur int) int {
-		return acc + cur
-	})
-	fmt.Println("Sum: ", sum)
-
-	product := Reduce(nums, 1, func(acc, cur int) int {
-		return acc * cur
-	})
-	fmt.Println("Product: ", product)
-//Part 3 - Compose
-	addTwo := func(x int) int{
-		return x + 2
-	}
-	
-	double1 := func(x int)int {
-		return x * 2
-	}
-
-	doubleThenAddTwo := Compose(addTwo, double1)
-	result := doubleThenAddTwo(5)
-	fmt.Println(result)
-
-//Part 4
-	ExploreProcess()
-
-
-
-//Part 5
-z := 5
-	DoubleValue(z)
-	fmt.Println("After DoubleValue: ", z)
-	
-	DoublePointer(&z)
-	fmt.Println("After DoublePointer: ", z)
-
-	stackVal := CreateOnStack()
-	fmt.Println("Stack value: ", stackVal)
-
-	heapVal := CreateOnHeap()
-	fmt.Println("Heap value: ", heapVal)
-
-	i, k := 3,7
-	i, k = SwapValues(i,k)
-	//fmt.Println("After SwapValues: ", i, k)
-
-	l, m := 1,4
-	SwapPointers(&l, &m)
-	//fmt.Println("After SwapPointers: ", l, m)
-
 /*
 Which variables escaped to the heap?
 	The variable inside CreateOnHeap() escaped to the heap.
@@ -321,4 +234,107 @@ What does "escapes to heap" mean?
 	on the stack because it may be used again.
 */
 
+	fmt.Println("======= Process Information Demo =======")
+	ExploreProcess()
+
+	fmt.Println("======= Math Operations Demo ========")
+	
+	//factorials
+	f0, err0 := Factorial(0)
+	if err0 != nil { fmt.Println("Factorial(0) error: ", err0) } else { fmt.Println("Factorial(0) = ",f0) }
+	
+	f5, err5 := Factorial(5)
+	if err5 != nil { fmt.Println("Factorial(5) error: ", err5) } else { fmt.Println("Factorial(5) = ", f5) }
+	
+	f10, err10 := Factorial (10)
+	if err10 != nil { fmt.Println("Factorial (5) error", err10) } else { fmt.Println("Factorial(10) = ", f10) }
+
+	//prime
+	p17, err17 := IsPrime(17)
+	if err17 != nil { fmt.Println("IsPrime(17) error: ", err17) } else { fmt.Println("IsPrime(17) = ", p17) }
+	
+	p20, err20 := IsPrime(20)
+	if err20 != nil { fmt.Println("IsPrime(20) error", err20)} else { fmt.Println("IsPrime(20) =  ",p20) }
+	
+	p25, err25 := IsPrime(25)
+	if err25 != nil { fmt.Println("IsPrime(25) error", err25) } else { fmt.Println("IsPrime(25) = ", p25) }
+
+	//power
+	p28, err28 := Power(2,8)
+	if err28 != nil { fmt.Println("Power(2,8) error", err28) } else { fmt.Println("Power(2,8) = ", p28) }
+
+	p53, err53 := Power(5,3)
+	if err53 != nil { fmt.Println("Power(5,3) error", err53) } else{ fmt.Println("Power(5,3) = ", p53) }
+
+
+	fmt.Println("======= Closure Demo =========")
+
+	counter1 := MakeCounter(0)
+	counter2 := MakeCounter(100)
+
+	fmt.Println("counter1(): ", counter1())
+	fmt.Println("counter1(): ", counter1())
+	fmt.Println("counter2(): ", counter2())
+	fmt.Println("counter2(): ", counter2())
+	fmt.Println("counter1(): ", counter1())
+
+	double := MakeMultiplier(2)
+	triple := MakeMultiplier(3)
+	num := 5
+
+	fmt.Println("double(5) = ", double(num))
+	fmt.Println("triple(5) = ", triple(num))
+
+	add, sub, get := MakeAccumulator(100)
+	add(50)
+	fmt.Println("Accumulator after add 50", get())
+	sub(30)
+	fmt.Println("Accumulator after subtract 50", get())
+
+
+fmt.Println("======= Higher-Order =======")
+
+nums := []int {1,2,3,4,5,6,7,8,9,10}
+
+	squared :=  Apply(nums, func(x int) int {
+		return x * x
+	})
+	fmt.Println("Apply(square): ", squared)
+
+	evens := Filter(nums, func(x int) bool {
+		return x%2 == 0
+	})
+	fmt.Println("Filter (even nums): ", evens)
+
+	sum := Reduce(nums, 0, func(acc, cur int) int {
+		return acc + cur
+	})
+	fmt.Println("Reduce (summ)", sum)
+
+	doubleThenAdd10 := Compose(func(x int) int {
+		return x +10
+	}, func(x int) int {
+		return x * 2
+	})
+	fmt.Println("Compose (double then add 10) on5 ", doubleThenAdd10(5))
+
+
+fmt.Println("====== Pointer Demo ======")
+		
+	j,k := 3,7
+	fmt.Println("Before Swap: ", j, k)
+	j,k = SwapValues(j,k)
+	fmt.Println("After swap: ", j, k)
+
+	l,m := 1,4
+	fmt.Println("Before Swap Pt: ", l, m)
+	SwapPointers(&l, &m)
+	fmt.Println("After Swap Pt: ", l, m)
+	
+	
+
+
+
+
 }
+
